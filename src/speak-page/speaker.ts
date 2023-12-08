@@ -39,12 +39,6 @@ export class Speaker implements SpeakerApi {
   }) => {
     const utter = new SpeechSynthesisUtterance(option.text);
     utter.voice = option.voice;
-    utter.onstart = function() {
-      console.log(">>", option.text, option.voice)
-    };
-    utter.onend = function() {
-      console.log("<<", option.text, option.voice)
-    };
     this.synth.speak(utter);
   }
 }

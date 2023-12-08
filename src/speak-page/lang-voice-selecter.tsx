@@ -1,18 +1,24 @@
 import { Field } from "../bulma/field"
 import { LangSelect } from "./lang-select"
 import { VoiceSelect } from "./voice-select"
-import { useSpakerInputState } from "./speaker.context"
+import { SpeakerFormContext } from "./speaker.context"
+import { useContext } from "react"
 
 
 export const LangVoiceSelecter = () => {
-    const { lang, voice } = useSpakerInputState();
+    const { lang, voice } = useContext(SpeakerFormContext);
 
     return <Field hasAddons>
         <p className="control">
-            <LangSelect onChange={(e) => lang.fn(e.target.value)} />
+            <LangSelect
+                onChange={(v) => lang?.fn(v)}
+            />
         </p>
         <p className="control">
-            <VoiceSelect lang={lang.v ?? ""} onChange={(e) => voice.fn(e.target.value)} />
+            <VoiceSelect
+                lang={lang?.v ?? ""}
+                onChange={(v) => { voice?.fn(v) }}
+            />
         </p>
     </Field>
 }

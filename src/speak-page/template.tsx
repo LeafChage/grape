@@ -1,8 +1,8 @@
-import { SpeakerInputContext } from "./speaker.context"
+import { SpeakerFormContextProvider, } from "./speaker.context"
 import { SpeakerForm } from "./speaker-form";
 
 export const SpeakTemplate = () => {
-    return <SpeakerInputContext.Provider value={{}}>
+    return <SpeakerFormContextProvider >
         <SpeakerForm />
-    </SpeakerInputContext.Provider>
+    </SpeakerFormContextProvider >;
 }

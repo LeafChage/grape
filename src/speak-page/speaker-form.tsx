@@ -1,25 +1,17 @@
 import { useContext } from "react"
 import { LangVoiceSelecter } from "./lang-voice-selecter"
 import { TextTextArea } from "./text-textarea"
-import { SpeakerContext, useSpeakerVoice } from "./speaker-context"
-import { useSpakerInputState } from "./speaker.context"
+import { SpeakerContext } from "./speaker-context"
+import { SpeakerFormContext } from "./speaker.context"
 
 export const SpeakerForm = () => {
-    const api = useContext(SpeakerContext)
-
-    const { voice: voiceName, text } = useSpakerInputState();
-    const voice = useSpeakerVoice(voiceName.v ?? "")
+    const api = useContext(SpeakerContext)!;
+    const { voice: voiceName, text } = useContext(SpeakerFormContext)
 
     const speak = () => {
-        console.log(voice, text.v);
-        if (
-            voice !== undefined &&
-            text.v !== undefined
-        ) {
-            api?.speak({
-                text: text.v,
-                voice
-            });
+        const voice = api.getVoice(voiceName?.v ?? "")
+        if (voice !== undefined && text?.v !== undefined) {
+            api.speak({ text: text.v, voice });
         }
     }
 

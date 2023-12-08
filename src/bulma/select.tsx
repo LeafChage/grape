@@ -1,14 +1,12 @@
-import { FC } from "react"
+import { FC, HTMLProps, } from "react"
 
-export const Select: FC<{
-    values: string[],
-    onChange: React.ChangeEventHandler<HTMLSelectElement>
-}> = (props) => {
+export const Select: FC<
+    { options: string[], } &
+    HTMLProps<HTMLSelectElement>
+> = (props) => {
     return <span className="select">
-        <select onChange={props.onChange}>
-            {
-                props.values.map(value => <option key={value}>{value}</option>)
-            }
+        <select {...props}>
+            {props.options.map(opt => <option key={opt}>{opt}</option>)}
         </select>
     </span>
 }

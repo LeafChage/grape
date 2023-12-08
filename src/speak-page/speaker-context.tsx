@@ -15,31 +15,19 @@ export const SpeakerContextProvider: FC<PropsWithChildren> = (props) => {
     </SpeakerContext.Provider >
 }
 
-export const useSpeakerLanguages = () => {
+export const useSpeakerLanguages = (): [string[], () => void] => {
     const api = useContext(SpeakerContext);
-    const [languages, updateLanguages] = useState<string[]>(api?.getLanguages() ?? []);
-    useEffect(() => {
-        updateLanguages(api?.getLanguages() ?? [])
-    }, [api]);
-    return languages;
+    const [languages, updateLanguages] = useState<string[]>([]);
+    return [languages, () => updateLanguages(api?.getLanguages() ?? [])];
 }
 
-export const useSpeakerVoices = (lang: string) => {
+export const useSpeakerVoices = (lang: string): [SpeechSynthesisVoice[], () => void] => {
     const api = useContext(SpeakerContext);
-    const [voices, updateVoices] = useState<SpeechSynthesisVoice[]>(api?.getVoices(lang) ?? []);
+    const [voices, updateVoices] = useState<SpeechSynthesisVoice[]>([]);
 
-    useEffect(() => {
-        updateVoices(api?.getVoices(lang) ?? [])
-    }, [lang]);
-    return voices;
+    const update = () => { updateVoices(api?.getVoices(lang) ?? []) }
+    useEffect(update, [lang]);
+
+    return [voices, update];
 }
 
-export const useSpeakerVoice = (voiceName: string) => {
-    const api = useContext(SpeakerContext);
-    const [voice, updateVoice] = useState<SpeechSynthesisVoice | undefined>(api?.getVoice(voiceName));
-
-    useEffect(() => {
-        updateVoice(api?.getVoice(voiceName));
-    }, [voiceName]);
-    return voice;
-}
